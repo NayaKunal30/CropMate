@@ -29,8 +29,9 @@ DEBUG = True
 ALLOWED_HOSTS = ['localhost', '127.0.0.1','cropmate-7ovw.onrender.com']
 
 CSRF_TRUSTED_ORIGINS = [
-    'https://cropmate-7ovw.onrender.com/',
+    'https://cropmate-7ovw.onrender.com',
 ]
+
 # Application definition
 
 INSTALLED_APPS = [
