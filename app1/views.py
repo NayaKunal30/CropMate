@@ -18,8 +18,13 @@ def HomePage(request):
             if not file.name.lower().endswith(('.png', '.jpg', '.jpeg')):
                 error_message = "Invalid file type. Please upload an image."
             else:
+                # Create uploads directory if it doesn't exist
+                upload_dir = 'uploads'
+                if not os.path.exists(upload_dir):
+                    os.makedirs(upload_dir)
+
                 # Handle file upload
-                upload_path = os.path.join('uploads', file.name)
+                upload_path = os.path.join(upload_dir, file.name)
                 with open(upload_path, 'wb+') as destination:
                     for chunk in file.chunks():
                         destination.write(chunk)
@@ -69,7 +74,7 @@ def LoginPage(request):
 
 def LogoutPage(request):
     logout(request)
-    return redirect('login')
+    return redirect('signup')
 
 def calculate_area(image_path):
     if not image_path:

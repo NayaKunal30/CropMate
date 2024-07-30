@@ -108,8 +108,8 @@
     <nav id="navbar" class="bg-green-800 p-4 shadow-lg transition duration-300">
         <div class="container mx-auto flex justify-between items-center">
             <div class="flex items-center">
-                <img src="{% static 'logo.png' %}" alt="CropMate Logo" class="w-12 h-12 mr-2"> 
-                <span class="text-white text-2xl font-bold">CropMate</span>
+                <img src="{% static 'logo.png' %}" alt="CropMate Logo" class="w-12 h-12 mr-2">
+                <span class="text-white text-xl md:text-2xl font-bold">CropMate</span>
             </div>
             <div class="hidden md:flex items-center space-x-4">
                 <a href="#about" class="text-white hover:text-gray-200 transition duration-300">About</a>
@@ -149,13 +149,14 @@
             </div>
         </div>
     </nav>
+    
     <!-- Welcome Section -->
     <section class="flex flex-col items-center justify-center h-screen text-center bg-cover bg-center relative" style="background-image: url('https://img.freepik.com/premium-photo/agriculture-crop-farming-social-media-banner-template-farming-profession-vector-design_732449-27839.jpg?w=996');">
-        <div class="absolute inset-0 bg-green-900 opacity-70"></div> <!-- Darker green overlay for texture -->
-        <div class="relative z-10 p-4 mt-[-900px]"> <!-- Increased negative margin-top -->
-            <h1 class="text-8xl font-extrabold text-yellow-400 mb-2 drop-shadow-lg">Welcome to CropMate</h1>
-            <p class="text-4xl text-white mb-6 drop-shadow-md">Calculate the amount of seeds needed for your crops based on your land's area and seed density.</p>
-            <a href="#calculator" class="bg-yellow-600 hover:bg-yellow-700 text-black font-bold py-5 px-10 rounded-lg transition duration-200 text-xl shadow-lg mt-10">Calculate Now</a> <!-- Increased margin-top -->
+        <div class="absolute inset-0 bg-green-900 opacity-70"></div>
+        <div class="relative z-10 p-4 mt-[-900px] md:mt-0"> <!-- Adjusted margin-top for larger screens -->
+            <h1 class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-extrabold text-yellow-400 mb-2 drop-shadow-lg">Welcome to CropMate</h1>
+            <p class="text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-4xl text-white mb-6 drop-shadow-md">Calculate the amount of seeds needed for your crops based on your land's area and seed density.</p>
+            <a href="#calculator" class="bg-yellow-600 hover:bg-yellow-700 text-black font-bold py-3 px-6 sm:py-4 sm:px-8 md:py-5 md:px-10 rounded-lg transition duration-200 text-lg sm:text-xl md:text-2xl shadow-lg mt-4 sm:mt-6 md:mt-8 lg:mt-10">Calculate Now</a>
         </div>
     </section>
 
@@ -284,100 +285,116 @@
     <!-- JavaScript for Card Animation -->
     <script>
         document.addEventListener("DOMContentLoaded", function() {
+            // Staggered card animations
             const cards = document.querySelectorAll('.card');
             cards.forEach((card, index) => {
                 setTimeout(() => {
                     card.classList.add('animate-fade');
-                }, index * 100); // Staggered animation
+                }, index * 100);
             });
-        });
-        document.addEventListener("DOMContentLoaded", function() {
+        
+            // Image fade-in animation
             const img = document.querySelector('.animate-fade');
-            img.classList.add('animate-fade');
-    
-            const fadeIn = () => {
-                img.style.opacity = '0';
-                img.style.transition = 'opacity 0.5s ease-in-out';
-                setTimeout(() => {
-                    img.style.opacity = '1';
-                }, 100); // Delay for fade-in effect
-            };
-    
-            fadeIn();
-        });
-        document.addEventListener("DOMContentLoaded", function() {
+            if (img) {
+                img.classList.add('animate-fade');
+                const fadeIn = () => {
+                    img.style.opacity = '0';
+                    img.style.transition = 'opacity 0.5s ease-in-out';
+                    setTimeout(() => {
+                        img.style.opacity = '1';
+                    }, 100);
+                };
+                fadeIn();
+            }
+        
+            // Staggered animations for left and right cards
             const leftCards = document.querySelectorAll('.animate-fade-left');
             const rightCards = document.querySelectorAll('.animate-fade-right');
-    
             leftCards.forEach((card, index) => {
                 setTimeout(() => {
                     card.style.transform = 'translateX(0)';
                     card.style.opacity = '1';
                     card.style.transition = 'transform 0.5s ease-in-out, opacity 0.5s ease-in-out';
-                }, index * 300); // Staggered animation for left cards
+                }, index * 300);
             });
-    
             rightCards.forEach((card, index) => {
                 setTimeout(() => {
                     card.style.transform = 'translateX(0)';
                     card.style.opacity = '1';
                     card.style.transition = 'transform 0.5s ease-in-out, opacity 0.5s ease-in-out';
-                }, index * 300 + 150); // Staggered animation for right cards
+                }, index * 300 + 150);
             });
-        });
-        function updateFileName(event) {
+        
+            // File input update
             const fileInput = document.getElementById('image');
-            const fileNameDisplay = document.getElementById('file-name');
-            const uploadedImage = document.getElementById('uploaded-image');
-    
-            // Update the file name displayed on the button
-            const file = fileInput.files[0];
-            if (file) {
-                fileNameDisplay.textContent = file.name;
-    
-                // Display the selected image
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    uploadedImage.src = e.target.result;
-                };
-                reader.readAsDataURL(file);
-            } else {
-                fileNameDisplay.textContent = 'Choose File';
-                uploadedImage.src = ''; // Reset the image if no file is selected
+            if (fileInput) {
+                fileInput.addEventListener('change', updateFileName);
             }
-        }
-        document.getElementById('calculateBtn').addEventListener('click', function () {
-            const seedDensity = document.getElementById('seedDensity').value;
-            const area = document.getElementById('area').value;
-            const result = document.getElementById('result');
-
-            if (seedDensity && area) {
-                const seedsNeeded = seedDensity * area;
-                result.textContent = `You will need approximately ${seedsNeeded} seeds.`;
-            } else {
-                result.textContent = 'Please enter valid values.';
-            }
-        });
-        document.getElementById('menu-toggle').addEventListener('click', function() {
-            const mobileMenu = document.getElementById('mobile-menu');
-            mobileMenu.classList.toggle('hidden');
-        });
-        document.addEventListener('DOMContentLoaded', function() {
-            const navbar = document.querySelector('nav'); // Select your navbar
-            const toggleNavbar = () => {
-                if (window.scrollY > 50) { // Change 50 to adjust when the navbar should change
-                    navbar.classList.add('navbar-scrolled');
-                    navbar.classList.remove('navbar-transparent');
+        
+            function updateFileName(event) {
+                const file = fileInput.files[0];
+                const fileNameDisplay = document.getElementById('file-name');
+                const uploadedImage = document.getElementById('uploaded-image');
+                
+                if (file) {
+                    fileNameDisplay.textContent = file.name;
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        uploadedImage.src = e.target.result;
+                    };
+                    reader.readAsDataURL(file);
                 } else {
-                    navbar.classList.add('navbar-transparent');
-                    navbar.classList.remove('navbar-scrolled');
+                    fileNameDisplay.textContent = 'Choose File';
+                    uploadedImage.src = '';
                 }
-            };
-    
-            // Listen for scroll events
-            window.addEventListener('scroll', toggleNavbar);
-            toggleNavbar(); // Initial check
+            }
+        
+            // Seed calculator
+            const calculateBtn = document.getElementById('calculateBtn');
+            if (calculateBtn) {
+                calculateBtn.addEventListener('click', function () {
+                    const seedDensity = document.getElementById('seedDensity').value;
+                    const area = document.getElementById('area').value;
+                    const result = document.getElementById('result');
+        
+                    if (seedDensity && area) {
+                        const seedsNeeded = seedDensity * area;
+                        result.textContent = `You will need approximately ${seedsNeeded} seeds.`;
+                    } else {
+                        result.textContent = 'Please enter valid values.';
+                    }
+                });
+            }
+        
+            // Mobile menu toggle
+            const menuToggle = document.getElementById('menu-toggle');
+            if (menuToggle) {
+                menuToggle.addEventListener('click', function () {
+                    const mobileMenu = document.getElementById('mobile-menu');
+                    if (mobileMenu) {
+                        mobileMenu.classList.toggle('hidden');
+                    }
+                });
+            }
+        
+                    // Navbar scroll effect
+            const navbar = document.querySelector('nav');
+            if (navbar) {
+                const toggleNavbar = () => {
+                    if (window.scrollY > 50) {
+                        navbar.classList.add('fixed', 'top-0', 'left-0', 'w-full', 'bg-green-700', 'bg-opacity-80'); // Add fixed classes
+                        navbar.classList.remove('bg-green-800', 'bg-opacity-100'); // Remove original color
+                    } else {
+                        navbar.classList.remove('fixed', 'top-0', 'left-0', 'w-full', 'bg-green-700', 'bg-opacity-80'); // Remove fixed classes
+                        navbar.classList.add('bg-green-800', 'bg-opacity-100'); // Reset to original color and opacity
+                    }
+                };
+
+                window.addEventListener('scroll', toggleNavbar);
+                toggleNavbar(); // Initial check
+            }
         });
+        
     </script>
 </html>
 
