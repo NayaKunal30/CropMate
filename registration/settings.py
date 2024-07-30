@@ -26,10 +26,10 @@ SECRET_KEY = 'django-insecure--%#4sl@qiw60v&kg@)2ri7$o6z3x=0ii2l-n769o^-gun5mve2
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1','https://cropmate-7ovw.onrender.com/']
+ALLOWED_HOSTS = ['localhost', '127.0.0.1','cropmate-7ovw.onrender.com']
 
 CSRF_TRUSTED_ORIGINS = [
-    'https://cropmate-7ovw.onrender.com/',
+    'cropmate-7ovw.onrender.com',
 ]
 # Application definition
 
